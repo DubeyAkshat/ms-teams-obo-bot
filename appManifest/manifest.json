@@ -1,0 +1,49 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.19/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.19",
+  "version": "1.0.0",
+  "id": "60736edc-7127-45c2-b7c5-9a213746a46c",
+  "developer": {
+    "name": "Teams App, Inc.",
+    "websiteUrl": "https://example.azurewebsites.net",
+    "privacyUrl": "https://example.azurewebsites.net/privacy",
+    "termsOfUseUrl": "https://example.azurewebsites.net/termsofuse"
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "name": {
+    "short": "Conversation Bot",
+    "full": "Conversation Bot"
+  },
+  "description": {
+    "short": "Quickly set up Teams bot with SSO for seamless user authentication.",
+    "full": "This sample bot demonstrates implementing SSO in Microsoft Teams using Azure AD."
+  },
+  "accentColor": "#FFFFFF",
+  "bots": [
+    {
+      "botId": "cacf858b-4160-4b12-a6d4-926ef155991d",
+      "scopes": [
+        "personal"
+      ],
+      "supportsFiles": false,
+      "isNotificationOnly": false
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "token.botframework.com",
+    "*.ngrok-free.app",
+    "*.ngrok.io",
+    "d9be2da28a8a.ngrok-free.app"
+  ],
+  "webApplicationInfo": {
+    "id": "cacf858b-4160-4b12-a6d4-926ef155991d",
+    "resource": "api://botid-cacf858b-4160-4b12-a6d4-926ef155991d"
+  }
+}
