@@ -417,8 +417,10 @@ server.post('/api/messages', async (req, res) => {
         'authorization': req.headers['authorization'] ? 'present' : 'missing',
         'user-agent': req.headers['user-agent']
     });
-    console.log('Body type:', req.body?.type);
-    console.log('From:', req.body?.from?.name, req.body?.from?.id);
+    console.log('Request:', req);
+    // console.log('Body type:', req.body?.type);
+    // console.log('Body:', req.body);
+    // console.log('From:', req.body?.from?.name, req.body?.from?.id);
     
     try {
         // Route received request to adapter for processing

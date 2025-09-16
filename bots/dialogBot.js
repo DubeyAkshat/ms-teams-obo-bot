@@ -54,7 +54,7 @@ class DialogBot extends TeamsActivityHandler {
      */
     async run(context) {
         await super.run(context);
-
+        console.log("Context:\n", context);
         // Save any state changes. The load happened during the execution of the Dialog.
         await this.conversationState.saveChanges(context, false);
         await this.userState.saveChanges(context, false);
