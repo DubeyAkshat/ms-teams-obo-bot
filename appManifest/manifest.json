@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.19/MicrosoftTeams.schema.json",
   "manifestVersion": "1.19",
   "version": "1.0.0",
-  "id": "60736edc-7127-45c2-b7c5-9a213746a46c",
+  "id": "72343bb5-bfda-4904-b25f-c29c6da90517",
   "developer": {
     "name": "Teams App, Inc.",
     "websiteUrl": "https://example.azurewebsites.net",
@@ -40,7 +40,7 @@
     "token.botframework.com",
     "*.ngrok-free.app",
     "*.ngrok.io",
-    "d9be2da28a8a.ngrok-free.app"
+    "7151c2c0a288.ngrok-free.app"
   ],
   "webApplicationInfo": {
     "id": "cacf858b-4160-4b12-a6d4-926ef155991d",
