@@ -1,4 +1,60 @@
-// index.js - Enhanced industrial strength Teams SSO implementation
+// =============================================================================
+// HTTP/HTTPS REQUEST INTERCEPTION - MUST BE FIRST
+// =============================================================================
+console.log('Setting up HTTP/HTTPS request interception...');
+
+const originalHttpRequest = require('http').request;
+const originalHttpsRequest = require('https').request;
+
+// Intercept HTTP requests
+require('http').request = function(options, callback) {
+    console.log('=== HTTP REQUEST INTERCEPTED ===');
+    console.log('URL:', options.href || `${options.protocol || 'http:'}//${options.host || options.hostname}:${options.port || 80}${options.path}`);
+    console.log('Method:', options.method || 'GET');
+    console.log('Headers:', JSON.stringify(options.headers, null, 2));
+    console.log('================================');
+    
+    const req = originalHttpRequest.call(this, options, callback);
+    
+    // Intercept request body
+    const originalWrite = req.write;
+    req.write = function(chunk) {
+        console.log('=== HTTP REQUEST BODY ===');
+        console.log(chunk.toString());
+        console.log('========================');
+        return originalWrite.call(this, chunk);
+    };
+    
+    return req;
+};
+
+// Intercept HTTPS requests  
+require('https').request = function(options, callback) {
+    console.log('=== HTTPS REQUEST INTERCEPTED ===');
+    console.log('URL:', options.href || `${options.protocol || 'https:'}//${options.host || options.hostname}:${options.port || 443}${options.path}`);
+    console.log('Method:', options.method || 'GET');
+    console.log('Headers:', JSON.stringify(options.headers, null, 2));
+    console.log('==================================');
+    
+    const req = originalHttpsRequest.call(this, options, callback);
+    
+    // Intercept request body
+    const originalWrite = req.write;
+    req.write = function(chunk) {
+        console.log('=== HTTPS REQUEST BODY ===');
+        console.log(chunk.toString());
+        console.log('=========================');
+        return originalWrite.call(this, chunk);
+    };
+    
+    return req;
+};
+
+console.log('HTTP/HTTPS interception setup complete.');
+
+// =============================================================================
+// ORIGINAL CODE STARTS HERE
+// =============================================================================
 
 // Import required packages
 const path = require('path');
@@ -42,6 +98,10 @@ adapter.use(async (context, next) => {
     console.log('Channel ID:', context.activity.channelId);
     console.log('User ID:', context.activity.from?.id);
     console.log('User Name:', context.activity.from?.name);
+    console.log('Activity ID:', context.activity.id);
+    console.log('Conversation ID:', context.activity.conversation?.id);
+    console.log('Service URL:', context.activity.serviceUrl);
+    console.log('Channel Data:', JSON.stringify(context.activity.channelData, null, 2));
     
     try {
         await next();
@@ -417,13 +477,14 @@ server.post('/api/messages', async (req, res) => {
         'authorization': req.headers['authorization'] ? 'present' : 'missing',
         'user-agent': req.headers['user-agent']
     });
-    console.log('Request:', req);
-    // console.log('Body type:', req.body?.type);
-    // console.log('Body:', req.body);
-    // console.log('From:', req.body?.from?.name, req.body?.from?.id);
+    console.log('Body type:', req.body?.type);
+    console.log('From:', req.body?.from?.name, req.body?.from?.id);
+    console.log('Conversation:', req.body?.conversation?.id);
+    console.log('Channel:', req.body?.channelId);
     
     try {
         // Route received request to adapter for processing
+        console.log('=== Starting adapter.process() ===');
         await adapter.process(req, res, (context) => bot.run(context));
         console.log('=== Message Processed Successfully ===');
     } catch (error) {
